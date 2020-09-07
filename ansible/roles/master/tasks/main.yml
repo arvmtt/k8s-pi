@@ -1,0 +1,39 @@
+---
+- name: Initialize the Kubernetes cluster with kubeadm
+  command: kubeadm init --pod-network-cidr=10.244.0.0/16
+  args:
+    creates: /etc/kubernetes/admin.conf
+    #  notify: Setup Container Networking Interface
+
+- name: Setup Container Networking Interface
+  command: kubectl apply -f https://raw.githubusercontent.com/coreos/flannel/2140ac876ef134e0ed5af15c65e414cf26827915/Documentation/kube-flannel.yml 
+  environment:
+    KUBECONFIG: /etc/kubernetes/admin.conf
+
+- name: Generate cluster join command
+  command: kubeadm token create --print-join-command
+  register: join_command
+
+- name: Copy join command to file
+  copy:
+    content: "{{ join_command.stdout_lines[0] }}"
+    dest: /tmp/join-command
+
+- name: (Local Machine) Fetch join command
+  fetch:
+    src: /tmp/join-command
+    dest: ./tmp/join-command
+    flat: yes
+
+- name: Create .kube directory
+  file:
+    path: /home/ubuntu/.kube
+    state: directory
+
+- name: Copy kubeconfig to user
+  copy:
+    src: /etc/kubernetes/admin.conf
+    remote_src: true
+    dest: /home/ubuntu/.kube/config
+    owner: ubuntu
+    group: ubuntu

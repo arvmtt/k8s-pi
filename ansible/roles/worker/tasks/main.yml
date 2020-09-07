@@ -1,0 +1,9 @@
+---
+- name: Copy join command
+  copy:
+    src: ./tmp/join-command
+    dest: /tmp/join-command.sh
+    mode: 0777
+    force: true
+  notify: Join cluster
+

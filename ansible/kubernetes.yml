@@ -1,0 +1,6 @@
+---
+- name: Setup Kubernetes Dashboard (Web UI)
+  hosts: 127.0.0.1
+  connection: local
+  roles:
+    - kubernetes-dashboard

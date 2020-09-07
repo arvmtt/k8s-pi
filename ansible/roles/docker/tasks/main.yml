@@ -1,0 +1,42 @@
+---
+- name: Add Docker GPG key
+  apt_key:
+    url: https://download.docker.com/linux/raspbian/gpg
+    state: present
+
+- name: Add Docker repository 
+  apt_repository:
+    repo: deb [arch=arm64] https://download.docker.com/linux/ubuntu eoan stable
+    state: present
+
+- name: Install Docker CE
+  apt:
+    pkg:
+      - docker-ce
+      - docker-ce-cli
+      - containerd.io
+    update_cache: yes
+
+- name: Setup Docker deamon 
+  copy:
+    dest: /etc/docker/daemon.json
+    content: |
+      {
+        "exec-opts": ["native.cgroupdriver=systemd"],
+        "log-driver": "json-file",
+        "log-opts": {
+          "max-size": "100m"
+        },
+        "storage-driver": "overlay2"
+      }
+
+- name: Create Docker service
+  file:
+    path: /etc/systemd/system/docker.service.d
+    state: directory
+
+- name: Restart Docker
+  systemd:
+    name: docker 
+    state: started
+    daemon_reload: yes

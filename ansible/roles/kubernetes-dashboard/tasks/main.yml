@@ -1,0 +1,16 @@
+---
+- name: Deploy Kubernetes dashboard
+  k8s:
+    state: present
+    src: ../kubernetes/kubernetes-dashboard/dashboard-deployment.yml
+
+- name: Deploy service account
+  k8s:
+    state: present
+    src: ../kubernetes/kubernetes-dashboard/dashboard-serviceAccount.yml
+
+- name: Deploy cluster role binding
+  k8s:
+    state: present
+    src: ../kubernetes/kubernetes-dashboard/dashboard-clusterRoleBinding.yml
+
