@@ -4,13 +4,24 @@ This project is for provisioning, configuration, and monitoring a Kubernetes clu
 *Originally written as a bachelor's thesis, the project is currently migrating to a hobby project.*
 *A rewriting of the documentation is currently under progress and is therefore presently lacking.*
 
-Overview of tools used:
+Personal implementation based on four Raspberry Pi 4 2GB running Ubuntu Server 19.10.
+
+Quick overview of tools used:
 
 - Ansible
 - Docker
 - Kubernetes
+- Flannel
 - Helm
+- Kubernetes-dashboard
 - Prometheus
 - Grafana
 
-Personal implementation based on four Raspberry Pi 4 2GB running Ubuntu Server 19.10.
+*TODO*
+## Overview
+### Tools and Technologies
+### Implementation
+## Installing and Running Cluster
+## Applications and Services
+## Caveats
+
