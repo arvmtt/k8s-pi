@@ -1,0 +1,10 @@
+---
+alertmanager:
+  enabled: false
+
+kubeStateMetrics:
+  enabled: false
+
+server:
+  persistentVolume:
+    enabled: false
